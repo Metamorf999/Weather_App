@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CAPTCHA Generator & Verifier</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Simple CAPTCHA</h1>
+    <div id="captcha"></div>
+    <input type="text" id="userInput" placeholder="Enter CAPTCHA">
+    <button onclick="verifyCaptcha()">Verify</button>
+    <p id="result"></p>
+    <button onclick="generateCaptcha()">Generate New CAPTCHA</button>
+  </div>
+
+  <script>function generateCaptcha() {
+    let charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+    let lengthOtp = 6;
+    let captcha = "";
+    for (let i = 0; i < lengthOtp; i++) {
+      let index = Math.floor(Math.random() * charsArray.length + 1);
+      captcha += charsArray[index];
+    }
+    document.getElementById("captcha").innerText = captcha;
+  }
+  
+  function verifyCaptcha() {
+    let userInput = document.getElementById("userInput").value;
+    let generatedCaptcha = document.getElementById("captcha").innerText;
+  
+    if (userInput === generatedCaptcha) {
+      alert("CAPTCHA verified successfully!");
+    } else {
+      alert("CAPTCHA verification failed. Please try again.");
+    }
+  }
+  
+  generateCaptcha(); 
+  </script>
+  
+</body>
+</html>

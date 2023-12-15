@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Simple Quiz</h1>
+    <div class="quiz" id="quiz">
+      <div class="question">
+        <h2>Question 1:</h2>
+        <p id="question1"></p>
+        <div class="options" id="options1"></div>
+      </div>
+      <div class="question">
+        <h2>Question 2:</h2>
+        <p id="question2"></p>
+        <div class="options" id="options2"></div>
+      </div>
+      <div class="question">
+        <h2>Question 3:</h2>
+        <p id="question3"></p>
+        <div class="options" id="options3"></div>
+      </div>
+    </div>
+    <p id="score"></p>
+    <button onclick="calculateScore()">Submit Answers</button>
+  </div>
+
+  <script>const quizData = [
+    {
+      question: "What is the capital of France?",
+      options: ["Paris", "Berlin", "Rome"],
+      answer: 0,
+      selected: null
+    },
+    {
+      question: "Which planet is known as the Red Planet?",
+      options: ["Mars", "Jupiter", "Saturn"],
+      answer: 0,
+      selected: null
+    },
+    {
+      question: "Who painted the Mona Lisa?",
+      options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh"],
+      answer: 0,
+      selected: null
+    }
+  ];
+  
+  function loadQuestions() {
+    for (let i = 0; i < quizData.length; i++) {
+      const questionElement = document.getElementById(`question${i + 1}`);
+      const optionsElement = document.getElementById(`options${i + 1}`);
+  
+      questionElement.innerText = quizData[i].question;
+  
+      quizData[i].options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.innerText = option;
+        button.onclick = () => selectOption(i, index);
+        optionsElement.appendChild(button);
+      });
+    }
+  }
+  
+  function selectOption(questionIndex, optionIndex) {
+    quizData[questionIndex].selected = optionIndex;
+    const options = document.getElementById(`options${questionIndex + 1}`).children;
+    for (let i = 0; i < options.length; i++) {
+      options[i].disabled = true;
+    }
+    options[optionIndex].disabled = false; 
+  }
+  
+  function calculateScore() {
+    let score = 0;
+    for (let i = 0; i < quizData.length; i++) {
+      if (quizData[i].selected === quizData[i].answer) {
+        score++;
+      }
+    }
+    const scoreElement = document.getElementById("score");
+    scoreElement.innerText = `Your Score: ${score} out of ${quizData.length}`;
+  }
+  
+  loadQuestions();
+  
+  </script>
+</body>
+</html>
